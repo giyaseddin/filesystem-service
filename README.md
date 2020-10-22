@@ -18,6 +18,15 @@ The system uses Laravel MVC framework (PHP programming language), it contains a 
 
 For scalability purposes, it avoids writing directly to a desk, instead it returns a stream of data, this way the size of the file will not lock resources, thus will not cause a load on the server. This makes downloading huge files by multiple users less expensive.
 
+Reference: https://laravel.com/docs/8.x/responses#streamed-downloads
+
+## **System Setup**
+Steps for configuring a typical laravel application can be found here:
+``https://laravel.com/docs/8.x/installation``
+
+
 ## **Usage**
 Requesting a file can be done by calling the API using ``[GET] /api/files`` endpoint. A parameter ``path`` of data type `string` is required to specify the path of the file.
+
+An interactive API documentation interface (made with Swagger) can be found on ``/docs``
 
