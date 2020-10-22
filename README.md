@@ -1,4 +1,4 @@
-###### **Filesystem API Laravel Project**
+##### **Filesystem API Laravel Project**
 
 This challenge is about building an API server serving files hosted on the local filesystem to the user. The project should serve files from a specific directory and subdirectories, and not anywhere outside. Implement an API endpoint for serving the files. The API will have an endpoint that'll receive the file path as a parameter, and return the contents to the user in an efficient manner. Think of the following issues while designing your backend: 
 - how to specify configuration (location of the directory and other configuration you think is needed)

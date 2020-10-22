@@ -15,7 +15,7 @@ class FilesystemController extends Controller
 
         $this->checkIfFileValid($filePath);
 
-        return response()->json(false, 500);
+        return response()->download(Storage::disk(env('STORAGE_DISK'))->path($filePath));
     }
 
     /**
@@ -24,19 +24,13 @@ class FilesystemController extends Controller
      */
     protected function fileExists($filePath)
     {
-        return Storage::exists($filePath);
+        return Storage::disk(env('STORAGE_DISK'))->exists($filePath);
     }
 
     protected function checkFilePermission($filePath)
     {
         // File permissions for the requesting user goes here.
         return true;
-    }
-
-    protected function isInsideForbiddenDir($filePath)
-    {
-        $path = explode('/', $filePath);
-        return $path[0] != '..';
     }
 
     private function checkIfFileValid($filePath)

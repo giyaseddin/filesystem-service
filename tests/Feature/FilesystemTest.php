@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tests\TestCase;
@@ -12,6 +14,8 @@ class FilesystemTest extends TestCase
 {
     use WithFaker;
     protected $apiPrefix = "api/files/";
+    protected $disk = "local";
+    protected $fileName = "photo1.jpg";
 
     /**
      * Visit the given URI with a GET request.
@@ -66,7 +70,10 @@ class FilesystemTest extends TestCase
 
     public function testFileRetrievedSuccessfully()
     {
+        $response = $this->get($this->apiPrefix . '/', [
+            'path' => 'dataset/test.txt',
+        ]);
 
+        $response->assertStatus(200);
     }
-
 }
