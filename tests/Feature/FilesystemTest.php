@@ -40,7 +40,6 @@ class FilesystemTest extends TestCase
      */
     public function testFileNotFound()
     {
-//        $this->withoutExceptionHandling();
         $response = $this->get($this->apiPrefix . '/', [
             'path' => $this->faker->sentence  . $this->faker->fileExtension,
         ]);
@@ -55,5 +54,19 @@ class FilesystemTest extends TestCase
         $response->assertStatus(422);
     }
 
+
+    public function testPermissionDeniedForRequestedFile()
+    {
+        $response = $this->get($this->apiPrefix . '/', [
+            'path' => '../' . $this->faker->sentence  . $this->faker->fileExtension,
+        ]);
+
+        $response->assertStatus(403);
+    }
+
+    public function testFileRetrievedSuccessfully()
+    {
+
+    }
 
 }
