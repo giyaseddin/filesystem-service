@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tests\TestCase;
 
 class FilesystemTest extends TestCase
@@ -21,6 +23,10 @@ class FilesystemTest extends TestCase
      */
     public function get($uri, array $parameters = [], array $headers = [])
     {
+        $headers = [
+            'CONTENT_TYPE' => 'application/json',
+            'Accept' => 'application/json',
+        ];
         $server = $this->transformHeadersToServerVars($headers);
         $cookies = $this->prepareCookiesForRequest();
 
@@ -32,20 +38,22 @@ class FilesystemTest extends TestCase
      *
      * @return void
      */
-    public function testFileDoesntExist()
+    public function testFileNotFound()
     {
+//        $this->withoutExceptionHandling();
         $response = $this->get($this->apiPrefix . '/', [
-            'path' => $this->faker->word,
+            'path' => $this->faker->sentence  . $this->faker->fileExtension,
         ]);
 
         $response->assertStatus(404);
     }
 
-    public function testFilePathIsRequired()
+    public function testNoPathGiven()
     {
-        $response = $this->get($this->apiPrefix . '/');
+        $response = $this->get($this->apiPrefix . '/?path=');
 
-        $response->assertStatus(400);
+        $response->assertStatus(422);
     }
+
 
 }
